@@ -1,47 +1,23 @@
 /*
-	This function sends the odin username to the ldap-info.php script to look up directory info
-	
-	If odin exist, the script throws back a list of user data delimited by a '#'
-	
-	else a list of empty strings delimited by #
+	\global  Variable that tells you which website you are on for easy migration! ... maybe.
 */
-//Global variable for which site you are on
-var SITE = "https://www.research.pdx.edu/~thath/qt";
+var SITE = "http://www.research.pdx.edu/~thath/qt";
+/*
+	\brief Function to get ldap data from odin user name 
+	\detail This function sends the odin username to the ldap-info.php script to look up directory info.  This server side script returns a JSON object, and we use JQuery to set the information.
+*/
 function sendOdin()
 {
+	var ldap_info = [];
     var odin = $('#tabs-1 #odin').val();
-	    
-	$('#email').html('loading...').load(SITE+'/bin/ldap-info.php', 'odin='+odin);
-/*	params = odin;
-    request = new ajaxRequest();
-    request.open("GET", SITE+"/bin/ldap-info.php?odin="+params ,true);
-    
-    request.onreadystatechange = function()
-        {
-            if (this.readyState == 4)
-                {
-                    if (this.status == 200){
-                            if (this.responseText){
-                                    var data = this.responseText.split("#");
-                                    var name = decodeURIComponent(data[0]);
-                                    var email = decodeURIComponent(data[1]);
-                                    var phone = decodeURIComponent(data[2]);
-                                    var room = decodeURIComponent(data[3]);
-                                    var dept = decodeURIComponent(data[4]);
-                                    document.getElementById('name').value = name;
-                                    document.getElementById('email').value = email;
-                                    document.getElementById('phone').value = phone;
-                                    document.getElementById('room').value = room
-                                    document.getElementById('dept').value = dept;
-                                } else {
-                                    alert("Ajax error: No data received");
-                                }
-                        } else {
-                            alert("Ajax error: " + this.statusText);
-                        }
-                }
-        }
-    request.send();*/
+
+	$.getJSON(SITE+'/bin/ldap-info.php?odin='+odin, function(data) {
+		$('#tabs-1 #name').val(data.cn);
+		$('#tabs-1 #email').val(data.mail);
+		$('#tabs-1 #phone').val(data.telephoneNumber);
+		$('#tabs-1 #dept').val(data.ou);
+		$('#tabs-1 #room').val(data.roomNumber);
+	});
 }
 
 //this function sends the email address to the ldap-info.php script and returns 
