@@ -1,0 +1,5 @@
+NOTE: Remember that backups occur nightly. If a file was created and deleted during the same day, it will not be part of any backup and cannot be restored.
+
+Date of Lost Email: 
+
+Enter any additional information here:

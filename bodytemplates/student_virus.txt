@@ -1,0 +1,8 @@
+Original VIF/BOT Ticket #: 
+Operating System (must match license): 
+
+To the student: A charge will appear on your student account for this procedure ($10 for virus scan, $25 for operating system reinstall).
+
+To the workbench: Student computer submitted to workbench for reimaging.
+
+Enter any additional information here:

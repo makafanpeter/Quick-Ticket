@@ -1,0 +1,6 @@
+NOTE:  Remember that backups occur nightly. If a file was created and deleted during the same day, it will not be part of any backup and cannot be restored.
+
+File name:
+File location:
+Date and Time file was last present, usable, etc:  
+Can existing file(s) be overwritten:  Yes / No

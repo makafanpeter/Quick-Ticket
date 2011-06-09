@@ -1,0 +1,5 @@
+NOTE:  Remember that backups occur nightly. If an email was received and deleted during the same day, it will not be part of any backup and cannot be restored.
+
+Folder Name (e.g. Inbox):
+Date and Time email to be recovered was last present:  
+Can existing folder be overwritten:  Yes / No
