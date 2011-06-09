@@ -1,0 +1,106 @@
+<div class="user-data">Odin:<br /><input class="user-data" id="odin" type="text" name="odin" /> </div>
+		<div class="user-data">Name:<br /><input class="user-data" id="name" type="text" name="name"/></div>
+		<div class="user-data">Email:<br /><input class="user-data" id="email" type="text" name="email"/></div>
+		<div class="user-data">Refers to:<br />
+			<input id="refersTo" type="text" name="refersTo" />
+		</div>
+		<br class="clear_both" />
+		<div class="user-data">Phone:<br /><input class="user-data" id="phone" type="text" name="phone"/></div>
+		<div class="user-data">Department:<br /><input class="user-data" id="dept" type="text" name="dept"/></div>
+		<div class="user-data">Room:<br /><input class="user-data" id="room" type="text" name="room"/></div>
+	<div class="user-data">Status:<br />
+	<select id="status" name="status">
+		<option value="new">new</option>
+		<option value="resolved">resolved</option>
+		<option value="rejected">rejected</option>
+	</select>
+	</div>
+	<br class="clear_both" />
+	<div class="user-data">Backup Required:<br />
+		<select id="backup" name="BENCH_Backup">
+			<option value=""></option>
+			<option value="Yes">Yes</option>
+			<option value="No Backup Required">No Backup Required</option>
+		</select>
+	</div>
+	<div class="user-data">Customer Type:<br />
+		<select id="custType" name="BENCH_Customer_Type">
+			<option value=""></option>
+			<option value="Fac/Staff Personal">Fac/Staff Personal</option>
+			<option value="Student Pay Service">Student Pay Service</option>
+			<option value="PSU Owned">PSU Owned</option>
+		</select>
+	</div>
+	<div class="user-data">Machine Type:<br />
+		<select id="machineType" name="BENCH_Machine Type">
+			<option value=""></option>
+			<option value="Other Desktop">Other Desktop</option>
+			<option value="Other Laptop">Other Laptop</option>
+			<option value="Optiplex 745">Optiplex 745</option>
+			<option value="Optiplex 755">Optiplex 755</option>
+			<option value="Optiplex 760">Optiplex 760</option>
+			<option value="Optiplex 780">Optiplex 780</option>
+			<option value="Optiplex 170">Optiplex 170</option>
+			<option value="Optiplex GX520">Optiplex GX520</option>
+			<option value="Optiplex GX240">Optiplex GX240</option>
+			<option value="Optiplex GX260">Optiplex GX260</option>
+			<option value="Optiplex GX270">Optiplex GX270</option>
+			<option value="Optiplex GX280">Optiplex GX280</option>
+			<option value="Optiplex GX520">Optiplex GX520</option>
+			<option value="Optiplex GX620">Optiplex GX620</option>
+			<option value="Dimension All Types">Dimension All Types</option>
+			<option value="Inspiron All Types">Inspiron All Types</option>
+			<option value="Latitude">Latitude</option>
+			<option value="HP All Types">HP All Types</option>
+			<option value="iMac G5">iMac G5</option>
+			<option value="iMac Intel">iMac Intel</option>
+			<option value="Mac Mini Intel">Mac Mini Intel</option>
+			<option value="Mac Mini PPC">Mac Mini PPC<
+		</select>
+	</div>
+	<div class="user-data">Stage:<br />
+		<select id="stage" name="BENCH_Stage">
+			<option value=""></option>
+			<option value="Checked In">Checked In</option>
+			<option value="Racked">Racked</option>
+			<option value="Backup Started">Backup Started</option>
+			<option value="Backup Verified">Backup Verified</option>
+			<option value="Image Started">Image Started</option>
+			<option value="Image Finished">Image Finished</option>
+			<option value="Drivers/Updates Done">Drivers/Updates Done</option>
+			<option value="Software Installed">Software Installed</option>
+			<option value="Backup Restored">Backup Restored</option>
+			<option value="Certified">Certified</option>
+			<option value="Transfered to Done">Transfered to Done</option>
+			<option value="Picked Up/Delivered">Picked Up/Delivered</option>
+		</select>
+	</div>
+	<div class="user-data">Machine Name: <br />
+		<input id="machineName" type="text" name="BENCH_Machine Name" /><br />
+	</div>
+	<div class="user-data">Serial Number: <br />
+		<input id="serialNumber" type="text" name="BENCH_Serial_Number" />
+	</div>
+	<br class="clear_both" />
+	<div class="user-data">Subject:<br />
+		<input id="subject" type="text" name="subject" value size="51"/>
+	</div>
+	<div class="user-data">Quick Subject:<br />
+	<select id="quickSubject" name="quickSubject">
+        <option></option>
+		<option value="Disabled Type E">Disabled Type E</option>
+		<option value="Game Console Registration">Game Console Registration</option>
+		<option value="[WRKBENCH] Student Virus Scan/Reinstall OS">[WRKBENCH] Student Virus Scan/Reinstall OS</option>
+		<option value="[WRKBENCH] Staff/Faculty Reimage">[WRKBENCH] Staff/Faculty Reimage</option>
+		<option value="[WRKBENCH] Staff/Faculty Personal">[WRKBENCH] Staff/Faculty Personal</option>
+		<option value="[WRKBENCH] Software Install">[WRKBENCH] Software Install</option>
+		<option value="[WRKBENCH] Appointment">[WRKBENCH] Appointment</option>
+	</select>
+	</div>
+	<br class="clear_both" />
+	<div class="user-data">Description:<br />
+		<textarea id="description" cols=100 rows=10 name="description"></textarea>
+		<input type="submit" onClick="createTicket();"/>&nbsp;<span id="ticketnumber"></span>
+	</div>
+	<br class="clear_both" />
+	<a href="CASlogout.php">Logout</a>
