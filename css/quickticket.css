@@ -1,0 +1,16 @@
+body {
+	font-family: arial, sans-serif;
+}
+.user-data{
+	float: left;
+	margin: 5px;
+}
+.clear_both{
+	clear: both;
+}
+#psuLogo{
+	position: absolute;
+	right: 5px;
+	top: 0px;
+}
+
