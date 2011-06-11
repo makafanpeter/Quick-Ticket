@@ -2,6 +2,7 @@
 if (($_POST['odin'] && $_POST['email'] && $_POST['name']) != ''){
   
   require_once 'rt_api.php';
+  require_once '.info.php';
   //RT_Api::$debug = 1; // debug mode
 
 
@@ -30,7 +31,7 @@ if (($_POST['odin'] && $_POST['email'] && $_POST['name']) != ''){
   
     //print_r($ticket); 
 
-	$api = new RT_Api('formhelper', 'password');
+	$api = new RT_Api($user, $password);
 	$ticketinfo = $api->createTicket($ticket);
 	$id = $ticketinfo->id;
 	
