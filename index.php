@@ -43,14 +43,21 @@ Quick ticket V2
 <script language="javascript" type="text/javascript" src="jquery-ui/ui/jquery-ui-1.8.13.custom.js"></script>
 <script>
 $(document).ready(function(){
-	$('#odin').focus();
-	$('#odin').change(function() {
-		sendOdin();
+	$('#tabs-1 #odin').focus();
+	$('#tabs-1 #odin').change(function() {
+		sendOdin('tabs-1');
 	});
-	$('#quickSubject').change(function() {
-		setFormSubject();
-		showWRKBNCHforms();
-		setQueue();
+	$('#tabs-2 #odin').change(function() {
+		sendOdin('tabs-2');
+	});
+	$('#tablink-2').click(function() {
+		$('#tabs-2 #odin').focus();
+	});
+	$('#tabs-1 #quickSubject').change(function() {
+		setFormSubject('tabs-1');
+	});
+	$('#tabs-2 #quickSubject').change(function() {
+		setFormSubject('tabs-2');
 	});
 	$('.user-data button').click(function() {
 		alert($('body div #creator').val());
@@ -64,11 +71,12 @@ $(document).ready(function(){
 </head>
 <body> 
 <div id="creator" style="display: none"><?php echo phpCAS::getUser();?></div> 
-<h1>Quick Ticket</h1><img id="psuLogo" src="images/portland_state_logo.gif"/>
+<h1>Quick Ticket</h1><img id="psuLogo" src="images/psu_logo.gif"/>
+
 <div id="tabs">
 	<ul>
-		<li><a href="#tabs-1">Regular Ticket</a></li>
-		<li><a href="#tabs-2">Workbench Ticket</a></li>
+		<li><a id="tablink-1" href="#tabs-1">Regular Ticket</a></li>
+		<li><a id="tablink-2" href="#tabs-2">Workbench Ticket</a></li>
 	</ul>
 <div id="tabs-1">
 	<?php include_once('inc/regular_ticket.html');?>
