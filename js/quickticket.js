@@ -5,19 +5,28 @@ var SITE = "http://www.research.pdx.edu/~thath/qt";
 /*
 	\brief Function to get ldap data from odin user name 
 	\detail This function sends the odin username to the ldap-info.php script to look up directory info.  This server side script returns a JSON object, and we use JQuery to set the information.
+	\params tab Tells the function which tab it is currently on
 */
-function sendOdin()
+function sendOdin(tab)
 {
 	var ldap_info = [];
-    var odin = $('#tabs-1 #odin').val();
+    var odin = $('#'+tab+' #odin').val();
 
+	if (odin != ''){
 	$.getJSON(SITE+'/bin/ldap-info.php?odin='+odin, function(data) {
-		$('#tabs-1 #name').val(data.cn);
-		$('#tabs-1 #email').val(data.mail);
-		$('#tabs-1 #phone').val(data.telephoneNumber);
-		$('#tabs-1 #dept').val(data.ou);
-		$('#tabs-1 #room').val(data.roomNumber);
+		$('#'+tab+' #name').val(data.cn);
+		$('#'+tab+' #email').val(data.mail);
+		$('#'+tab+' #phone').val(data.telephoneNumber);
+		$('#'+tab+' #dept').val(data.ou);
+		$('#'+tab+' #room').val(data.roomNumber);
 	});
+	}else{
+		$('#'+tab+' #name').val('');
+		$('#'+tab+' #email').val('');
+		$('#'+tab+' #phone').val('');
+		$('#'+tab+' #dept').val('');
+		$('#'+tab+' #room').val('');
+	}
 }
 
 //this function sends the email address to the ldap-info.php script and returns 
@@ -107,7 +116,7 @@ function createTicket(){
 		var machineTypeSelect = document.getElementById('machineType'); //IE sucks
 		var machineType = machineTypeSelect.options[machineTypeSelect.selectedIndex].value;
 		var machineName = document.getElementById('machineName').value;
-		var serialNumber = document.getElementById('serialNumber').value;
+	var serialNumber = document.getElementById('serialNumber').value;
 		var stageSelect = document.getElementById('stage'); //IE sucks
 		var stage = stageSelect.options[stageSelect.selectedIndex].value;
 	}
@@ -163,41 +172,25 @@ function createTicket(){
 	    clearForm();
 }
 /*
-	The form sets the subject and the body from the list of quick subjects
-	
-	it sends the "quick subject" field to the quickSubject.cgi and which spits 
-	out the body text.  The quick subject drop down values are how the subject
-	line is set
+	\breif Sets the the description field of form	
+	\detail This function sets the subject and the body from the list of quick subjects.  It sends the "quick subject" field to the quickSubject.php and which spits out the body text.  The quick subject drop down values are how the subject line is set
+	\params tab the corresponding tab that the description field is on.
 */
-function setFormSubject(){
+function setFormSubject(tab){
 
-	var quickSubjectSelect = document.getElementById('quickSubject');
-	var quickSubject = quickSubjectSelect.options[quickSubjectSelect.selectedIndex].value;
+	var quickSubject = $('#'+tab+' #quickSubject').val();
+
+	if (quickSubject == '') {
+		$('#'+tab+' #description').val('');
+		$('#'+tab+' #subject').val('');
+		return;
+	}
 	
-	params = "subject="+quickSubject;
-	request = new ajaxRequest();
-	request.open("POST", SITE+"/bin/quickSubject.cgi",true);
-	request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-	request.setRequestHeader("Content-length", params.length);
-	request.setRequestHeader("Connection", "close");
-    
-    request.onreadystatechange = function()
-        {
-            if (this.readyState == 4)
-                {
-                    if (this.status == 200){
-                            if (this.responseText){
-                                    document.getElementById('description').value = this.responseText;
-									document.getElementById('subject').value = quickSubject;
-                                } else {
-                                    alert("Ajax error: No data received");
-                                }
-                        } else {
-                            alert("Ajax error: " + this.statusText);
-                        }
-                }
-        }
-    request.send(params);
+	$.get(SITE+'/bin/quickSubject.php', { subject: quickSubject}, function(data) {
+		$('#'+tab+' #description').val(data);
+		$('#'+tab+' #subject').val(quickSubject);
+		return;
+	});
 	
 }
 /*
