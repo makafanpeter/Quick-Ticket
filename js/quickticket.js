@@ -84,95 +84,41 @@ function sendEmail()
 	HTML hyperlink.
 	
 */
-function createTicket(){
+function createTicket(tab){
 
+	var formdata = new Object();
 	document.getElementById('ticketnumber').innerHTML = "<img src=\"images/loading.gif\" />Loading...";
 	
-//    var odin = document.getElementById('odin').value;
-    var odin = $('#tabs-1 .user-data #odin').val();
-//	var name = document.getElementById('name').value;
-	var name = $('#tabs-1 .user-data #name').val();
-//    var email = document.getElementById('email').value;
-	var email = $('#tabs-1 .user-data #email').val();
-//    var phone = document.getElementById('phone').value;
-	var phone = $('#tabs-1 .user-data #phone').val();
-//    var subject = document.getElementById('subject').value;
-	var subject = $('#tabs-1 .user-data #subject').val();
-//    var dept = document.getElementById('dept').value;
-	var dept = $('#tabs-1 .user-data #dept').val();
-//    var room = document.getElementById('room').value;
-	var room = $('#tabs-1 .user-data #room').val();
-//    var description = document.getElementById('description').value;
-	var description = $('#tabs-1 .user-data #description').val();
-	var status = $('#tabs-1 .user-data #status').val();
-	var creator = $('#creator').val();
-	//var refersTo = document.getElementById('refersTo').value;
+	formdata.odin = $('#'+tab+' .user-data #odin').val();
+	formdata.name = $('#'+tab+' .user-data #name').val();
+	formdata.email = $('#'+tab+' .user-data #email').val();
+	formdata.phone = $('#'+tab+' .user-data #phone').val();
+	formdata.subject = $('#'+tab+' .user-data #subject').val();
+	formdata.dept = $('#'+tab+' .user-data #dept').val();
+	formdata.room = $('#'+tab+' .user-data #room').val();
+	formdata.description = $('#'+tab+' .user-data #description').val();
+	formdata.status = $('#'+tab+' .user-data #status').val();
+	formdata.creator = $('body #creator').html()
+	formdata.refersTo = $('#'+tab+' #refersTo').val();
 	
-	if (queue == 'uss-helpdesk-workbench'){
-		var backupSelect = document.getElementById('backup'); //IE sucks
-		var backup = backupSelect.options[backupSelect.selectedIndex].value;
-		var custTypeSelect = document.getElementById('custType'); //IE sucks
-		var custType = custTypeSelect.options[custTypeSelect.selectedIndex].value;
-		var machineTypeSelect = document.getElementById('machineType'); //IE sucks
-		var machineType = machineTypeSelect.options[machineTypeSelect.selectedIndex].value;
-		var machineName = document.getElementById('machineName').value;
-	var serialNumber = document.getElementById('serialNumber').value;
-		var stageSelect = document.getElementById('stage'); //IE sucks
-		var stage = stageSelect.options[stageSelect.selectedIndex].value;
+	if (tab == 'tabs-2'){	
+		formdata.backup = $('#'+tab+' #backup').val();
+		formdata.custType = $('#'+tab+' #custType').val();
+		formdata.machineType = $('#'+tab+' #machineType').val();
+		formdata.machineName = $('#'+tab+' #machineName').val();
+		formdata.serialNumber = $('#'+tab+' #serialNumber').val();
+		formdata.stage = $('#'+tab+' #stage').val();
+		formdata.queue = 'uss-helpdesk-workbench';
+	}else{
+		formdata.queue = 'uss-helpdesk';
 	}
- 
-    params = "odin="+odin+"&"
-			+"name="+name+"&"
-			+"email="+email+"&"
-			+"phone="+phone+"&"
-			+"subject="+subject+"&"
-			+"dept="+dept+"&"
-			+"room="+room+"&"
-			+"description="+description+"&"
-			+"creator="+creator+"&"
-			+"queue="+queue+"&"
-			+"status="+status;
-			//+"refersTo="+refersTo;
-			
-	if (queue == 'uss-helpdesk-workbench') {
-		params = params+"&"+"BENCH_Backup="+backup+"&"
-						+"BENCH_Customer_Type="+custType+"&"
-						+"BENCH_Machine_Type="+machineType+"&"
-						+"BENCH_Machine_Name="+machineName+"&"
-						+"BENCH_Stage="+stage+"&"
-						+"BENCH_Serial_Number="+serialNumber;
-		}
-		
-    request = new ajaxRequest();
-    request.open("POST", SITE+"/bin/rt-create.php", true);
-    request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-	request.setRequestHeader("Content-length", params.length);
-	request.setRequestHeader("Connection", "close");
 
-	error = false;
-    request.onreadystatechange = function()
-        {
-			if(this.readyState == 4)
-			{
-                    if (this.status == 200){
-                            if (this.responseText){
-                                    document.getElementById('ticketnumber').innerHTML = this.responseText;
-                                } else {
-									error = true;
-                                    alert("Ajax error: No data received");
-                                }
-                        } else {
-							error = true;
-                            alert("Ajax error: " + this.statusText);
-                        }
-                }
-        }
-    request.send(params);
-	if(error)
-	    clearForm();
+	$.get(SITE+'/bin/echo.php', formdata, function(data) {
+		alert(data);
+	});
 }
 /*
-	\breif Sets the the description field of form	
+	\brief Sets the the description field of form	
 	\detail This function sets the subject and the body from the list of quick subjects.  It sends the "quick subject" field to the quickSubject.php and which spits out the body text.  The quick subject drop down values are how the subject line is set
 	\params tab the corresponding tab that the description field is on.
 */
