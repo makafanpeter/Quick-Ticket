@@ -139,33 +139,30 @@ function setFormSubject(tab){
 	});
 	
 }
-/*
-	This is the function that creates the AJAX object
+/* 
+	\brief function that adds a new subject and description for quick subject
 */
-function ajaxRequest(){
-try
-{
-    var request = new XMLHttpRequest();
-}
-catch(e1)
-{
-    try
-    {
-        request = new ActiveXObject("Microsoft.XMLHTTP");
-    }
-    catch(e2)
-    {
-        try
-        {
-			request = new ActiveXObject("Msxml2.XMLHTTP");
-        }
-        catch(e3)
-        {
-            request = false;
-        }
-    }
-}
-return request;
+function addSubDesc(){
+
+	var formdata = new Object();
+	
+	formdata.subject = $('#tabs-3 #subject').val();
+	formdata.description = 	$('#tabs-3 #description').val();
+	
+	alert(formdata.description+'  '+formdata.subject);
+	$.get(SITE+'/bin/subject-description.php', formdata, function(data){
+		if (data == 1){
+			$( "#dialog-update-success" ).dialog({
+				buttons: { "Ok": function() { $(this).dialog("close");}},
+				modal: true
+			});
+		}else{
+			$( "#dialog-update-failure" ).dialog({
+				buttons: { "Ok": function() { $(this).dialog("close");}},
+				modal: true
+			});
+		}	
+	});
 }
 /*
 	\detail This function spits out the workbench custom fields.  It has the ability
