@@ -13,4 +13,6 @@ body {
 	right: 5px;
 	top: 0px;
 }
-
+.dialog{
+	display: none;
+}
