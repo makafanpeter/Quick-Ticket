@@ -1,7 +1,8 @@
 /*
-	\global  Variable that tells you which website you are on for easy migration! ... maybe.
+	\global  SITE Variable that tells you which website you are on for easy migration! ... maybe.
 */
 var SITE = "http://www.research.pdx.edu/~thath/qt";
+var qsdata;
 /*
 	\brief Function to get ldap data from odin user name 
 	\detail This function sends the odin username to the ldap-info.php script to look up directory info.  This server side script returns a JSON object, and we use JQuery to set the information.
@@ -146,24 +147,92 @@ function addSubDesc(){
 
 	var formdata = new Object();
 	
+	formdata.funct = 1;	
 	formdata.subject = $('#tabs-3 #subject').val();
 	formdata.description = 	$('#tabs-3 #description').val();
 	
-	alert(formdata.description+'  '+formdata.subject);
-	$.get(SITE+'/bin/subject-description.php', formdata, function(data){
+	$.get(SITE+'/bin/db_functions.php', formdata, function(data){
 		if (data == 1){
 			$( "#dialog-update-success" ).dialog({
-				buttons: { "Ok": function() { $(this).dialog("close");}},
-				modal: true
+				buttons: { "Ok": function() { $(this).dialog("close")}}
 			});
 		}else{
 			$( "#dialog-update-failure" ).dialog({
-				buttons: { "Ok": function() { $(this).dialog("close");}},
-				modal: true
+				buttons: { "Ok": function() { $(this).dialog("close")}}
 			});
 		}	
 	});
 }
+/*
+	\brief Function that passes update data to update script
+*/
+function editSubDesc(subject,description){
+
+	formdata = new Object();
+
+	formdata.subject = subject;
+	formdata.description = description;
+	formdata.funct = 3;
+
+	$.get(SITE+'/bin/db_functions.php', formdata, function(data){
+		if (data == 1){
+			return 1;
+		}else{
+			return 0;
+		}
+	});
+}
+
+/*
+	\brief Function that displays all quick subjects
+
+*/
+function getQuicksubject(){
+
+	$('#tabs-3 #edit-sub-desc').html('<div id="subject-accordion"></div>');
+
+	$.getJSON(SITE+'/bin/db_functions.php', { funct: 2 }, function(data){ 
+		qsdata = data;
+		for (qsitem in data){
+			$('#tabs-3 #edit-sub-desc #subject-accordion').append('<h4 id="link-edit-sub-desc-'+qsitem+'" value="'+qsitem+'">'+data[qsitem].subject+'</h4>');
+			$('#tabs-3').append('<div id="dialog-edit-sub-desc-'+qsitem+'" class="dialog" ><p>Subject</p><input id="subject-'+qsitem+'" /><p>Description</p><textarea id="description-'+qsitem+'" cols="60" rows="10"></textarea></div>');
+			$('#dialog-edit-sub-desc-'+qsitem+' #subject-'+qsitem).attr('value',data[qsitem].subject);
+			$('#dialog-edit-sub-desc-'+qsitem+' #description-'+qsitem).attr('value',data[qsitem].description);
+		}
+	});
+
+}
+/*
+	\brief Function that adds click events for the list of quick subjects
+*/
+
+function setQuickDialog(){
+	for (item in qsdata){
+		(function(i){//this took several hours away from my life that I will not get back
+			$('#link-edit-sub-desc-'+i).bind('click', function() {
+				$('#dialog-edit-sub-desc-'+i).dialog({
+					width: "700",
+					buttons: { "Submit": function(){
+									var errorCode = editSubDesc($('#dialog-edit-sub-desc #subject').val(), $('#dialog-edit-sub-desc #description').val())
+									if (errorCode == 1){
+										$(this).dialog("close");
+										$( "#dialog-update-success" ).dialog({
+											buttons: { "Ok": function() { $(this).dialog("close")}}
+										});
+									}else{
+										$(this).dialog("close");
+										$( "#dialog-update-failure" ).dialog({
+											buttons: { "Ok": function() { $(this).dialog("close")}}
+										});
+								}
+							}
+						}
+				});
+			});
+		})(item);//apparently this is how you call an anonymus function in javascript. Looks wierd huh?
+	}
+}
+
 /*
 	\detail This function spits out the workbench custom fields.  It has the ability
 	to make the workbench custom fields appear whether you change the queue or the
