@@ -148,8 +148,8 @@ function addSubDesc(){
 	var formdata = new Object();
 	
 	formdata.funct = 1;	
-	formdata.subject = $('#tabs-3 #subject').val();
-	formdata.description = 	$('#tabs-3 #description').val();
+	formdata.subject = $('#tabs-3 #add-sub-desc #subject').val();
+	formdata.description = 	$('#tabs-3 #add-sub-desc #description').val();
 	
 	$.get(SITE+'/bin/db_functions.php', formdata, function(data){
 		if (data == 1){
@@ -166,10 +166,11 @@ function addSubDesc(){
 /*
 	\brief Function that passes update data to update script
 */
-function editSubDesc(subject,description){
+function editSubDesc(subject,description,id){
 
 	formdata = new Object();
 
+	formdata.id = id;
 	formdata.subject = subject;
 	formdata.description = description;
 	formdata.funct = 3;
@@ -195,9 +196,10 @@ function getQuicksubject(){
 		qsdata = data;
 		for (qsitem in data){
 			$('#tabs-3 #edit-sub-desc #subject-accordion').append('<h4 id="link-edit-sub-desc-'+qsitem+'" value="'+qsitem+'">'+data[qsitem].subject+'</h4>');
-			$('#tabs-3').append('<div id="dialog-edit-sub-desc-'+qsitem+'" class="dialog" ><p>Subject</p><input id="subject-'+qsitem+'" /><p>Description</p><textarea id="description-'+qsitem+'" cols="60" rows="10"></textarea></div>');
+			$('#tabs-3').append('<div id="dialog-edit-sub-desc-'+qsitem+'" class="dialog" ><p>Subject</p><input id="subject-'+qsitem+'" /><p>Description</p><textarea id="description-'+qsitem+'" cols="60" rows="10"></textarea><input id="id-'+qsitem+'" type="hidden" /></div>');
 			$('#dialog-edit-sub-desc-'+qsitem+' #subject-'+qsitem).attr('value',data[qsitem].subject);
 			$('#dialog-edit-sub-desc-'+qsitem+' #description-'+qsitem).attr('value',data[qsitem].description);
+			$('#dialog-edit-sub-desc-'+qsitem+' #id-'+qsitem).attr('value',data[qsitem].id);
 		}
 	});
 
@@ -213,7 +215,7 @@ function setQuickDialog(){
 				$('#dialog-edit-sub-desc-'+i).dialog({
 					width: "700",
 					buttons: { "Submit": function(){
-									var errorCode = editSubDesc($('#dialog-edit-sub-desc #subject').val(), $('#dialog-edit-sub-desc #description').val())
+									var errorCode = editSubDesc($('#subject-'+i).val(), $('#description-'+i).val(), $('#id-'+i).val());
 									if (errorCode == 1){
 										$(this).dialog("close");
 										$( "#dialog-update-success" ).dialog({
@@ -229,7 +231,7 @@ function setQuickDialog(){
 						}
 				});
 			});
-		})(item);//apparently this is how you call an anonymus function in javascript. Looks wierd huh?
+		})(item);//Apparently, this is how you call an anonymus function in javascript. Looks wierd huh?
 	}
 }
 
